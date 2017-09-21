@@ -1,0 +1,32 @@
+---
+title: "RStanExercise-5"
+author: "S.Suzuki"
+date: "2017/9/21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 準備
+```{r exercise 5-1}
+setwd('~/ws/stan/RStanBook/RStanExercise')
+```
+
+### ライブラリの読み込み
+必要なライブラリを読み込んでおく
+```{r library}
+library(rstan)
+library(data.table)
+library(dplyr)
+```
+## exercise 5-1
+```{r exercise 5.1, echo=TRUE}
+#model5-3.stanを実行する
+dt <- fread(file='data/data-attendance-1.txt')
+fit <- stan(file='model/model5-3.stan',
+            data=list(N=nrow(dt), A=dt$A, Score=dt$Score/200, Y=dt$Y),
+            seed=1234)
+ext <- extract(fit)
+```
